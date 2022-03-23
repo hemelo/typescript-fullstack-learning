@@ -2,6 +2,7 @@ import { domInject } from '../decorators/dom-injector.js';
 import { checkPerformance } from '../decorators/performance.js';
 import { Negociacao } from '../models/negociacao.js';
 import { Negociacoes } from '../models/negociacoes.js';
+import { NegociacoesService } from '../services/negociacoes-service.js';
 import { ValidateData } from '../validators/validate-data.js';
 import { MensagemView } from '../views/mensagem-view.js';
 import { NegociacoesView } from '../views/negociacoes-view.js';
@@ -19,7 +20,8 @@ export class NegociacaoController {
     private negociacoes = new Negociacoes();
     private negociacoesView = new NegociacoesView("#negociacoesView");
     private mensagemView = new MensagemView("#mensagemView");
-
+    private negociacoesService = new NegociacoesService();
+    
     constructor() {
         this.negociacoesView.update(this.negociacoes);
     }
@@ -36,6 +38,17 @@ export class NegociacaoController {
         this.negociacoes.adiciona(negociacao);
         this.limparFormulario();
         this.atualizaView();
+    }
+
+    public importa(): void {
+        this.negociacoesService
+            .obterNegociacoes()
+            .then(lista => {
+                for(let negociacao of lista){
+                    this.negociacoes.adiciona(negociacao)
+                }
+            })
+            .then(() => this.negociacoesView.update(this.negociacoes))
     }
 
     private criaNegociacao(): Negociacao {
