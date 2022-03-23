@@ -1,6 +1,7 @@
+import { Comparable } from "../contracts/comparavel";
 import { ToString } from "../contracts/logavel";
 
-export class Negociacao implements ToString {
+export class Negociacao implements ToString, Comparable<Negociacao> {
     constructor(
         private _data: Date, 
         public readonly quantidade: number, 
@@ -29,5 +30,11 @@ export class Negociacao implements ToString {
             Quantidade: ${this.quantidade}
             Valor ${this.valor}
         `
+    }
+
+    public compare(negociacao: Negociacao): boolean{
+       return this.data.getDate() === negociacao.data.getDate() &&
+            this.data.getMonth() === negociacao.data.getMonth() &&
+            this.data.getFullYear() === negociacao.data.getFullYear()
     }
 }

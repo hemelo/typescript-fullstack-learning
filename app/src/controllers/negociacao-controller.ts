@@ -37,18 +37,27 @@ export class NegociacaoController {
         
         this.negociacoes.adiciona(negociacao);
         this.limparFormulario();
-        this.atualizaView();
+        this.atualizaView('Negociação adicionada com sucesso');
     }
 
     public importa(): void {
         this.negociacoesService
             .obterNegociacoes()
             .then(lista => {
-                for(let negociacao of lista){
+                return lista.filter(negociacaoDeHoje => {
+                    return !this.negociacoes
+                        .lista()
+                        .some(negociacao => negociacao.compare(negociacaoDeHoje))
+                })
+            })
+            .then(listaFiltrada => {
+                for(let negociacao of listaFiltrada){
                     this.negociacoes.adiciona(negociacao)
                 }
             })
-            .then(() => this.negociacoesView.update(this.negociacoes))
+            .then(() => { 
+                this.atualizaView('Negociações buscadas da API com sucesso');
+            })
     }
 
     private criaNegociacao(): Negociacao {
@@ -62,8 +71,8 @@ export class NegociacaoController {
         this.inputData.focus();
     }
 
-    private atualizaView(): void{
+    private atualizaView(message: string): void{
         this.negociacoesView.update(this.negociacoes);
-        this.mensagemView.update('Negociação adicionada com sucesso')
+        this.mensagemView.update(message)
     }
 }
