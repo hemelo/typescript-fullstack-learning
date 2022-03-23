@@ -3,7 +3,11 @@ export abstract class View<T>{
     private scape = false 
 
     constructor(selector: string, scape?: boolean){
-        this.element = document.querySelector(selector);
+        this.element = document.querySelector(selector)
+
+        if(scape){
+            this.scape = scape
+        }
     }
 
     protected abstract template(model: T): string;
