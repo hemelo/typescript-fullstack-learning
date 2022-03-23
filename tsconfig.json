@@ -6,7 +6,8 @@
         "noImplicitAny": true,
         "removeComments": true,
         "strictNullChecks": false,
-        "moduleResolution": "node"
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
     },
     "include": ["app/src/**/*"]
 }
