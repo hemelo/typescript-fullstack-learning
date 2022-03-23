@@ -9,7 +9,7 @@ export function checkPerformance() {
             const t1 = performance.now()
             const retorno = func.apply(this, args)
             const t2 = performance.now()
-            console.log(`${propertyKey}, tempo de execução: ${(t2 - t1) / 1000} segundos`)
+            console.log(`Método ${propertyKey}, tempo de execução: ${(t2 - t1) / 1000} segundos`)
             retorno
         }
     }
