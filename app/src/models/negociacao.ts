@@ -1,4 +1,6 @@
-export class Negociacao {
+import { ToString } from "../contracts/logavel";
+
+export class Negociacao implements ToString {
     constructor(
         private _data: Date, 
         public readonly quantidade: number, 
@@ -19,5 +21,13 @@ export class Negociacao {
         const quantidade = parseInt(quantidadeString);
         const valor = parseFloat(valorString);
         return new Negociacao(date, quantidade, valor);
+    }
+
+    public toString(): string {
+        return`
+            Data: ${this.data}
+            Quantidade: ${this.quantidade}
+            Valor ${this.valor}
+        `
     }
 }
