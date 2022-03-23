@@ -1,0 +1,4 @@
+/node_modules
+/servidor-api/node_modules
+/dist/js
+/app/*/*.md
